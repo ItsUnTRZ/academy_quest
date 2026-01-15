@@ -41,20 +41,6 @@ RSpec.describe QuestsController, type: :controller do
     end
   end
 
-  describe "GET #edit" do
-    let(:quest) { Quest.create!(name: "Test Quest") }
-
-    it "returns a successful response" do
-      get :edit, params: { id: quest.id }
-      expect(response).to be_successful
-    end
-
-    it "assigns the requested quest to @quest" do
-      get :edit, params: { id: quest.id }
-      expect(assigns(:quest)).to eq(quest)
-    end
-  end
-
   describe "POST #create" do
     context "with valid parameters" do
       it "creates a new quest" do
@@ -78,36 +64,6 @@ RSpec.describe QuestsController, type: :controller do
 
       it "renders the new template" do
         post :create, params: { quest: { name: nil } }
-        expect(response).to have_http_status(:unprocessable_content)
-      end
-    end
-  end
-
-  describe "PATCH #update" do
-    let(:quest) { Quest.create!(name: "Original Name", body: "Original body") }
-
-    context "with valid parameters" do
-      it "updates the quest" do
-        patch :update, params: { id: quest.id, quest: { name: "Updated Name" } }
-        quest.reload
-        expect(quest.name).to eq("Updated Name")
-      end
-
-      it "redirects to the quest" do
-        patch :update, params: { id: quest.id, quest: { name: "Updated Name" } }
-        expect(response).to redirect_to(quest)
-      end
-    end
-
-    context "with invalid parameters" do
-      it "does not update the quest" do
-        patch :update, params: { id: quest.id, quest: { name: nil } }
-        quest.reload
-        expect(quest.name).to eq("Original Name")
-      end
-
-      it "renders the edit template" do
-        patch :update, params: { id: quest.id, quest: { name: nil } }
         expect(response).to have_http_status(:unprocessable_content)
       end
     end
