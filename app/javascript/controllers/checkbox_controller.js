@@ -19,6 +19,8 @@ export default class extends Controller {
       questItem.classList.add("border-gray-200", "hover:border-indigo-300")
     }
 
+    // Blur to prevent focus jump after Turbo Stream replace
+    checkbox.blur()
     this.element.closest("form").requestSubmit()
   }
 }
