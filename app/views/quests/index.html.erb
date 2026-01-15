@@ -2,20 +2,20 @@
 
 <div class="w-full max-w-4xl mx-auto">
 
-  <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
-    <div class="flex flex-col items-center gap-6">
+  <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-8 mb-6 sm:mb-8 border border-gray-100">
+    <div class="flex flex-col items-center gap-4 sm:gap-6">
       <div class="flex-shrink-0">
-        <%= image_tag "profile.jpg", class: "w-32 h-32 rounded-full object-cover border-4 border-indigo-200 shadow-lg", alt: "Profile picture" %>
+        <%= image_tag "profile.jpg", class: "w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-4 border-indigo-200 shadow-lg", alt: "Profile picture" %>
       </div>
       <div class="flex-1 text-center">
-        <h1 class="text-4xl font-bold text-gray-900 mb-2 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+        <h1 class="text-2xl sm:text-4xl font-bold text-gray-900 mb-2 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
           Teeratorn Raksamuang
         </h1>
-        <p class="text-gray-600 mb-4 text-lg">
+        <p class="text-gray-600 mb-4 text-base sm:text-lg px-2">
           A passionate developer building amazing things.
         </p>
-        <div class="mt-6">
-          <%= link_to brag_path, class: "inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 hover:from-indigo-700 hover:to-purple-700" do %>
+        <div class="mt-4 sm:mt-6">
+          <%= link_to brag_path, class: "inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm sm:text-base font-semibold rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 hover:from-indigo-700 hover:to-purple-700" do %>
             My Brag Document
           <% end %>
         </div>
@@ -23,8 +23,8 @@
     </div>
   </div>
 
-  <div class="mb-6">
-    <h1 class="font-bold text-4xl mb-4">Quests</h1>
+  <div class="mb-4 sm:mb-6">
+    <h1 class="font-bold text-2xl sm:text-4xl mb-3 sm:mb-4">Quests</h1>
     <%= turbo_frame_tag "new_quest_form" do %>
       <%= render "form", quest: @quest %>
     <% end %>

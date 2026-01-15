@@ -5,7 +5,7 @@ export default class extends Controller {
   submit(event) {
     const checkbox = this.element
     const questItem = checkbox.closest(".quest-item")
-    const questNameDiv = questItem.querySelector(".text-lg")
+    const questNameDiv = questItem.querySelector(".quest-name")
 
     if (checkbox.checked) {
       questNameDiv.classList.add("line-through", "text-gray-400")
