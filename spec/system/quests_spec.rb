@@ -50,4 +50,17 @@ RSpec.describe "Quests", type: :system do
       expect(page).not_to have_content("Delete Me")
     end
   end
+
+  describe "navigation" do
+    it "has a link to brag document" do
+      visit quests_path
+      expect(page).to have_link("My Brag Document")
+    end
+
+    it "navigates to brag page when clicking the link" do
+      visit quests_path
+      click_link "My Brag Document"
+      expect(page).to have_current_path(brag_path)
+    end
+  end
 end
