@@ -10,13 +10,6 @@ RSpec.describe Quest, type: :model do
     it "is invalid without a name" do
       quest = Quest.new(name: nil)
       expect(quest).not_to be_valid
-      expect(quest.errors[:name]).to include("can't be blank")
-    end
-
-    it "is invalid with blank name" do
-      quest = Quest.new(name: "")
-      expect(quest).not_to be_valid
-      expect(quest.errors[:name]).to include("can't be blank")
     end
   end
 

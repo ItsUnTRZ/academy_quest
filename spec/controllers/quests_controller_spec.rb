@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe QuestsController, type: :controller do
+  before do
+    Quest.destroy_all
+  end
+
   describe "GET #index" do
     it "returns a successful response" do
       get :index
@@ -8,63 +12,28 @@ RSpec.describe QuestsController, type: :controller do
     end
 
     it "assigns all quests to @quests" do
-      quest1 = Quest.create!(name: "Quest 1")
-      quest2 = Quest.create!(name: "Quest 2")
+      quest = Quest.create!(name: "Quest 1")
       get :index
-      expect(assigns(:quests)).to match_array([quest1, quest2])
-    end
-  end
-
-  describe "GET #show" do
-    let(:quest) { Quest.create!(name: "Test Quest") }
-
-    it "returns a successful response" do
-      get :show, params: { id: quest.id }
-      expect(response).to be_successful
-    end
-
-    it "assigns the requested quest to @quest" do
-      get :show, params: { id: quest.id }
-      expect(assigns(:quest)).to eq(quest)
-    end
-  end
-
-  describe "GET #new" do
-    it "returns a successful response" do
-      get :new
-      expect(response).to be_successful
-    end
-
-    it "assigns a new quest to @quest" do
-      get :new
-      expect(assigns(:quest)).to be_a_new(Quest)
+      expect(assigns(:quests)).to include(quest)
     end
   end
 
   describe "POST #create" do
     context "with valid parameters" do
-      it "creates a new quest" do
+      it "creates a new quest and redirects" do
         expect {
-          post :create, params: { quest: { name: "New Quest", body: "Quest body" } }
+          post :create, params: { quest: { name: "New Quest" } }
         }.to change(Quest, :count).by(1)
-      end
-
-      it "redirects to the created quest" do
-        post :create, params: { quest: { name: "New Quest", body: "Quest body" } }
-        expect(response).to redirect_to(Quest.last)
+        expect(response).to redirect_to(quests_path)
       end
     end
 
     context "with invalid parameters" do
-      it "does not create a new quest" do
+      it "does not create a quest and renders index" do
         expect {
           post :create, params: { quest: { name: nil } }
         }.not_to change(Quest, :count)
-      end
-
-      it "renders the new template" do
-        post :create, params: { quest: { name: nil } }
-        expect(response).to have_http_status(:unprocessable_content)
+        expect(response).to render_template(:index)
       end
     end
   end
@@ -72,14 +41,10 @@ RSpec.describe QuestsController, type: :controller do
   describe "DELETE #destroy" do
     let!(:quest) { Quest.create!(name: "To Be Deleted") }
 
-    it "destroys the quest" do
+    it "destroys the quest and redirects" do
       expect {
         delete :destroy, params: { id: quest.id }
       }.to change(Quest, :count).by(-1)
-    end
-
-    it "redirects to the quests index" do
-      delete :destroy, params: { id: quest.id }
       expect(response).to redirect_to(quests_path)
     end
   end

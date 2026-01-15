@@ -1,13 +1,10 @@
 class QuestsController < ApplicationController
-  before_action :set_quest, only: %i[ show destroy ]
+  before_action :set_quest, only: %i[ destroy ]
 
   # GET /quests or /quests.json
   def index
     @quests = Quest.all
-  end
-
-  # GET /quests/1 or /quests/1.json
-  def show
+    @quest = Quest.new
   end
 
   # GET /quests/new
@@ -21,10 +18,13 @@ class QuestsController < ApplicationController
 
     respond_to do |format|
       if @quest.save
-        format.html { redirect_to @quest, notice: "Quest was successfully created." }
-        format.json { render :show, status: :created, location: @quest }
+        format.html { redirect_to quests_path }
+        format.json { render json: @quest, status: :created }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { 
+          @quests = Quest.all
+          render :index, status: :unprocessable_entity 
+        }
         format.json { render json: @quest.errors, status: :unprocessable_entity }
       end
     end
@@ -35,7 +35,7 @@ class QuestsController < ApplicationController
     @quest.destroy!
 
     respond_to do |format|
-      format.html { redirect_to quests_path, notice: "Quest was successfully destroyed.", status: :see_other }
+      format.html { redirect_to quests_path, status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -48,6 +48,6 @@ class QuestsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def quest_params
-      params.expect(quest: [ :name, :body ])
+      params.expect(quest: [ :name ])
     end
 end
