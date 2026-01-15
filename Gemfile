@@ -66,4 +66,6 @@ group :test do
   gem "rspec-rails"
   gem "capybara"
   gem "selenium-webdriver"
+  # Code coverage tool
+  gem "simplecov", require: false
 end
