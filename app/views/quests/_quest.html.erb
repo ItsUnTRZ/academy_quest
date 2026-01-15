@@ -1,5 +1,5 @@
 <%= turbo_frame_tag dom_id(quest) do %>
-  <div id="quest_<%= quest.id %>" class="quest-item flex items-center justify-between p-3 sm:p-4 bg-white rounded-lg border-2 <%= quest.is_done ? 'border-green-200 bg-green-50' : 'border-gray-200 hover:border-indigo-300' %> transition-all duration-200">
+  <div id="quest_<%= quest.id %>" data-testid="quest-item" class="quest-item flex items-center justify-between p-3 sm:p-4 bg-white rounded-lg border-2 <%= quest.is_done ? 'border-green-200 bg-green-50' : 'border-gray-200 hover:border-indigo-300' %> transition-all duration-200">
     <div class="flex items-center space-x-3 sm:space-x-4 flex-1 min-w-0">
       <%= form_with model: quest, method: :patch, class: "flex items-center flex-shrink-0" do |f| %>
         <label class="relative inline-flex items-center cursor-pointer group">
@@ -10,13 +10,13 @@
         </label>
       <% end %>
       <div class="flex-1 min-w-0">
-        <div class="quest-name text-base sm:text-lg font-medium <%= quest.is_done ? "line-through text-gray-400" : "text-gray-900" %> break-words">
+        <div data-testid="quest-name" class="quest-name text-base sm:text-lg font-medium <%= quest.is_done ? "line-through text-gray-400" : "text-gray-900" %> break-words">
           <%= quest.name %>
         </div>
       </div>
     </div>
     <div class="flex-shrink-0 ml-3 sm:ml-4">
-      <%= button_to "Destroy", quest, method: :delete, class: "rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-sm sm:text-base text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer" %>
+      <%= button_to "Destroy", quest, method: :delete, class: "rounded-md px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 text-sm sm:text-base text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { testid: "destroy-quest-button" } %>
     </div>
   </div>
 <% end %>

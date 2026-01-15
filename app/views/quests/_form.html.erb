@@ -2,11 +2,11 @@
   <div class="flex items-center gap-2 w-full">
     <div class="flex-1 min-w-0">
       <%= form.label :name, class: "sr-only" %>
-      <%= form.text_field :name, placeholder: "Quest name", required: true, class: ["block shadow-sm rounded-md border px-3 py-2 w-full text-sm sm:text-base", {"border-gray-400 focus:outline-blue-600": quest.errors[:name].none?, "border-red-400 focus:outline-red-600": quest.errors[:name].any?}] %>
+      <%= form.text_field :name, placeholder: "Quest name", required: true, data: { testid: "quest-name-input" }, class: ["block shadow-sm rounded-md border px-3 py-2 w-full text-sm sm:text-base", {"border-gray-400 focus:outline-blue-600": quest.errors[:name].none?, "border-red-400 focus:outline-red-600": quest.errors[:name].any?}] %>
     </div>
 
     <div class="flex-shrink-0">
-      <%= form.submit "Add Quest", class: "rounded-md px-3 sm:px-3.5 py-2 sm:py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 hover:from-indigo-700 hover:to-purple-700 text-white text-sm sm:text-base font-medium cursor-pointer whitespace-nowrap" %>
+      <%= form.submit "Add Quest", class: "rounded-md px-3 sm:px-3.5 py-2 sm:py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 hover:from-indigo-700 hover:to-purple-700 text-white text-sm sm:text-base font-medium cursor-pointer whitespace-nowrap", data: { testid: "add-quest-button" } %>
     </div>
   </div>
 <% end %>
