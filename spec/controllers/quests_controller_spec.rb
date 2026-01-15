@@ -15,7 +15,7 @@ RSpec.describe QuestsController, type: :controller do
       quest1 = Quest.create!(name: "Quest 1", created_at: 2.days.ago)
       quest2 = Quest.create!(name: "Quest 2", created_at: 1.day.ago)
       get :index
-      expect(assigns(:quests).to_a).to eq([quest2, quest1])
+      expect(assigns(:quests).to_a).to eq([ quest2, quest1 ])
     end
 
     it "assigns a new quest to @quest" do
@@ -52,6 +52,43 @@ RSpec.describe QuestsController, type: :controller do
         post :create, params: { quest: { name: nil } }, format: :turbo_stream
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to include("text/vnd.turbo-stream.html")
+      end
+    end
+  end
+
+  describe "PATCH #update" do
+    let!(:quest) { Quest.create!(name: "Original Quest", is_done: false) }
+
+    context "with valid parameters" do
+      it "updates the quest is_done status" do
+        patch :update, params: { id: quest.id, quest: { is_done: true } }
+        quest.reload
+        expect(quest.is_done).to be true
+      end
+
+      it "updates the quest name" do
+        patch :update, params: { id: quest.id, quest: { name: "Updated Quest" } }
+        quest.reload
+        expect(quest.name).to eq("Updated Quest")
+      end
+
+      it "redirects to quests index for HTML format" do
+        patch :update, params: { id: quest.id, quest: { is_done: true } }, format: :html
+        expect(response).to redirect_to(quests_path)
+      end
+
+      it "renders turbo stream template" do
+        patch :update, params: { id: quest.id, quest: { is_done: true } }, format: :turbo_stream
+        expect(response).to have_http_status(:success)
+        expect(response.content_type).to include("text/vnd.turbo-stream.html")
+      end
+    end
+
+    context "with invalid parameters" do
+      it "does not update the quest with blank name" do
+        patch :update, params: { id: quest.id, quest: { name: "" } }
+        quest.reload
+        expect(quest.name).to eq("Original Quest")
       end
     end
   end

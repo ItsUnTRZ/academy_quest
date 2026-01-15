@@ -1,9 +1,21 @@
 <%= turbo_frame_tag dom_id(quest) do %>
-  <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-    <div class="w-full sm:w-auto my-5">
-      <%= quest.name %>
+  <div id="quest_<%= quest.id %>" class="quest-item flex items-center justify-between p-4 bg-white rounded-lg border-2 <%= quest.is_done ? 'border-green-200 bg-green-50' : 'border-gray-200 hover:border-indigo-300' %> transition-all duration-200">
+    <div class="flex items-center space-x-4 flex-1">
+      <%= form_with model: quest, method: :patch, class: "flex items-center" do |f| %>
+        <label class="relative inline-flex items-center cursor-pointer group">
+          <%= f.check_box :is_done,
+              checked: quest.is_done, 
+              class: "w-5 h-5 text-indigo-600 border-2 border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 cursor-pointer transition-all duration-200", 
+              data: { controller: "checkbox", action: "change->checkbox#submit" } %>
+        </label>
+      <% end %>
+      <div class="flex-1 ml-4">
+        <div class="text-lg font-medium <%= quest.is_done ? "line-through text-gray-400" : "text-gray-900" %>">
+          <%= quest.name %>
+        </div>
+      </div>
     </div>
-    <div class="w-full sm:w-auto">
+    <div class="w-full sm:w-auto ml-4">
       <%= button_to "Destroy", quest, method: :delete, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer" %>
     </div>
   </div>
