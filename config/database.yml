@@ -2,7 +2,9 @@ default: &default
     adapter: postgresql
     encoding: unicode
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    url: <%= ENV.fetch("DATABASE_URL") { "postgres://localhost/academy_quest" } %>
+    host: localhost
+    username: unnie
+    password: 123
 
 development:
     <<: *default
