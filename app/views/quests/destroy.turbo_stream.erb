@@ -1,0 +1,8 @@
+<%= turbo_stream.remove dom_id(@quest) %>
+<% if @quests.empty? %>
+  <%= turbo_stream.append "quests" do %>
+    <div id="empty_state" class="text-center py-12 text-gray-500">
+      <p class="text-lg">No quests found.</p>
+    </div>
+  <% end %>
+<% end %>

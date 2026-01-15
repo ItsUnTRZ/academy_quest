@@ -3,12 +3,7 @@ class QuestsController < ApplicationController
 
   # GET /quests or /quests.json
   def index
-    @quests = Quest.all
-    @quest = Quest.new
-  end
-
-  # GET /quests/new
-  def new
+    @quests = Quest.order(created_at: :desc)
     @quest = Quest.new
   end
 
@@ -18,11 +13,16 @@ class QuestsController < ApplicationController
 
     respond_to do |format|
       if @quest.save
+        format.turbo_stream
         format.html { redirect_to quests_path }
         format.json { render json: @quest, status: :created }
       else
+        format.turbo_stream {
+          @quests = Quest.order(created_at: :desc)
+          render :create, status: :unprocessable_entity
+        }
         format.html {
-          @quests = Quest.all
+          @quests = Quest.order(created_at: :desc)
           render :index, status: :unprocessable_entity
         }
         format.json { render json: @quest.errors, status: :unprocessable_entity }
@@ -33,8 +33,10 @@ class QuestsController < ApplicationController
   # DELETE /quests/1 or /quests/1.json
   def destroy
     @quest.destroy!
+    @quests = Quest.order(created_at: :desc)
 
     respond_to do |format|
+      format.turbo_stream
       format.html { redirect_to quests_path, status: :see_other }
       format.json { head :no_content }
     end
