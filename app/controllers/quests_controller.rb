@@ -21,9 +21,9 @@ class QuestsController < ApplicationController
         format.html { redirect_to quests_path }
         format.json { render json: @quest, status: :created }
       else
-        format.html { 
+        format.html {
           @quests = Quest.all
-          render :index, status: :unprocessable_entity 
+          render :index, status: :unprocessable_entity
         }
         format.json { render json: @quest.errors, status: :unprocessable_entity }
       end
