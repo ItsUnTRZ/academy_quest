@@ -10,7 +10,7 @@
         </label>
       <% end %>
       <div class="flex-1 min-w-0">
-        <div class="quest-name text-base sm:text-lg font-medium <%= quest.is_done ? "line-through text-gray-400" : "text-gray-900" %> truncate">
+        <div class="quest-name text-base sm:text-lg font-medium <%= quest.is_done ? "line-through text-gray-400" : "text-gray-900" %> break-words">
           <%= quest.name %>
         </div>
       </div>
